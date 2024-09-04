@@ -1,5 +1,7 @@
-describe('upload video', () => {
-    it('login', () => {
-      expect(true).to.equal(true)
-    })
-  })
+describe('My Login Test', function (){
+    it('Visit Risk App Landing Page', function (){
+        cy.fixture('login.cy.js')
+        }
+    )
+}
+    )
