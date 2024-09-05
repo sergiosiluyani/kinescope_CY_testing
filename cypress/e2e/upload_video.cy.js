@@ -1,5 +1,5 @@
-describe('Login Test for Kinescope', () => {
-    it('should log in successfully with valid credentials', () => {
+describe('verify the video is uploaded', () => {
+    it('login first', () => {
         cy.login(); // Call the custom login command
     });
 });
