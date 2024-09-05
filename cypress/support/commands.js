@@ -11,39 +11,34 @@ Cypress.Commands.add('login', () => {
     });
 
 
-  Cypress.Commands.add('uploadVideo', (videoFileName, fixturePath) => {
-    // Load the headers from the fixture file
-    cy.fixture('headers').then((headers) => {
-      const videoFilePath = `${fixturePath}/${videoFileName}`;
+// cypress/support/commands.js
+
+Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, videoDescription, parentId, uploadToken }) => {
+    // Read the video file as a binary file
+    cy.readFile(videoPath, 'binary').then((fileContent) => {
+      // Convert binary file content into a Blob
+      const blob = Cypress.Blob.binaryStringToBlob(fileContent, 'video/mp4');
   
-      // Read the video file as a binary file
-      cy.readFile(videoFilePath, 'binary').then((fileContent) => {
-        // Convert binary file content into a Blob
-        const blob = Cypress.Blob.binaryStringToBlob(fileContent, 'video/mp4');
-  
-        // Send the request to upload the video
-        return cy.request({
-          method: 'POST',
-          url: 'https://uploader.kinescope.io/v2/video',
-          headers: {
-            Authorization: headers.Authorization,
-            'X-Parent-ID': headers['X-Parent-ID'],
-            'X-Video-Title': headers['X-Video-Title'],
-            'X-Video-Description': headers['X-Video-Description'],
-            'X-File-Name': headers['X-File-Name'],
-            'Content-Type': 'video/mp4' // Correctly set the content type
-          },
-          body: blob, // Send as raw binary
-          encoding: 'binary', // Ensure the binary encoding
-          failOnStatusCode: false // Handle unsuccessful responses
-        }).then((response) => {
-          // Log and check the response
-          if (response.status === 200) {
-            cy.log('Video uploaded successfully:', response.body);
-          } else {
-            cy.log(`Upload failed: ${response.status} - ${response.body}`);
-          }
-        });
+      // Send the request to upload the video
+      return cy.request({
+        method: 'POST',
+        url: 'https://uploader.kinescope.io/v2/video',
+        headers: {
+          Authorization:`Bearer ${uploadToken}`,
+          'X-Parent-ID': parentId,
+          'X-Video-Title': videoTitle,
+          'X-Video-Description': videoDescription,
+          'X-File-Name': videoFileName,
+          'Content-Type': 'video/mp4'
+        },
+        body: blob,
+        encoding: 'binary',
+        failOnStatusCode: false
+      }).then((response) => {
+        // Check the response
+        if (response.status === 200) {
+          cy.log('Video uploaded successfully:', response.body);
+        }
       });
     });
   });

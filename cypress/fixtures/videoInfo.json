@@ -1,0 +1,8 @@
+{
+    "videoFileName": "Jellyfish_1080_10s_5MB.mp4",
+    "videoPath": "cypress/fixtures/Jellyfish_1080_10s_5MB.mp4",
+    "videoTitle": "test_name",
+    "videoDescription": "test_description",
+    "parentId": "f38a59fa-0957-4de7-ae66-a3de1fbbeff2",
+    "uploadToken": "87c57355-9ac9-43de-aad9-74a8c2876f23"
+}
