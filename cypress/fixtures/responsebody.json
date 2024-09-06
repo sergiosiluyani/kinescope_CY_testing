@@ -3,9 +3,9 @@
     "body": {},
     "headers": {
       "server": "nginx",
-      "date": "Fri, 06 Sep 2024 19:56:11 GMT",
+      "date": "Fri, 06 Sep 2024 20:20:22 GMT",
       "content-type": "application/json",
-      "content-length": "457",
+      "content-length": "458",
       "connection": "keep-alive",
       "cache-control": "no-store",
       "tus-extension": "creation,expiration",
@@ -33,7 +33,7 @@
       "content-length": 5242409
     },
     "requestBody": {},
-    "duration": 14884,
+    "duration": 9399,
     "allRequestResponses": [
       {
         "Request Body": {},
@@ -54,9 +54,9 @@
         "Response Body": {},
         "Response Headers": {
           "server": "nginx",
-          "date": "Fri, 06 Sep 2024 19:56:11 GMT",
+          "date": "Fri, 06 Sep 2024 20:20:22 GMT",
           "content-type": "application/json",
-          "content-length": "457",
+          "content-length": "458",
           "connection": "keep-alive",
           "cache-control": "no-store",
           "tus-extension": "creation,expiration",

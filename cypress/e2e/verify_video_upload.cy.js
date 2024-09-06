@@ -12,9 +12,24 @@ describe('Verify the video is uploaded', () => {
       });
   
       cy.login();
+  
       
-      cy.getFolder();
+      cy.fixture('videoInfo.json').then((videoInfo) => {
       
-      cy.get('_1xspbv5').should('be.visible');
+        // Step 2: Visit the page where the video is uploaded
+        cy.visit('https://app.kinescope.io/video');
+
+        cy.getFolder();
+        
+        // Step 3: Verify the video with the correct title is present
+        cy.contains(videoInfo.videoTitle).should('be.visible');
+
+        cy.log(`The video "${videoInfo.videoTitle}" has successfully appeared on the page.`)
+        
+        // You can also verify the presence of other elements related to the video, if needed
+        // For example, checking the description
+        //cy.contains(videoInfo.videoDescription).should('be.visible');
     });
   });
+
+});
