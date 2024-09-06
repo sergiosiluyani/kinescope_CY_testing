@@ -11,6 +11,8 @@ describe('Verify the video is uploaded', () => {
         cy.uploadVideo(data);
       });
   
-      cy.login(); 
+      cy.login();
+      
+      cy.getFolder();
     });
   });
