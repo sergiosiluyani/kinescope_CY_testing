@@ -14,5 +14,7 @@ describe('Verify the video is uploaded', () => {
       cy.login();
       
       cy.getFolder();
+      
+      cy.get('_1xspbv5').should('be.visible');
     });
   });

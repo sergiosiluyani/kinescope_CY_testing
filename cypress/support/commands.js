@@ -12,7 +12,6 @@ Cypress.Commands.add('login', () => {
     
     
     Cypress.Commands.add('getFolder', () => {
-        // Use cy.session() to handle login sessions
           cy.visit('https://app.kinescope.io/video')
           cy.get('svg[viewBox="0 0 56 33"]').click();
           cy.get('svg[viewBox="0 0 56 33"]').trigger('keydown', { keyCode: 13 });
