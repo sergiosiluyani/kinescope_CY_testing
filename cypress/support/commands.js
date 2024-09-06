@@ -47,6 +47,11 @@ Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, vid
         // Check the response
         if (response.status === 200) {
           cy.log('Video uploaded successfully:', response.body);
+          
+          let body = response; // Access the body
+                
+        // Save the video ID to a fixture file
+        cy.writeFile('cypress/fixtures/responsebody.json', { body }); // Save as JSON
         }
       });
     });
