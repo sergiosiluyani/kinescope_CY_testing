@@ -20,15 +20,13 @@ Cypress.Commands.add('login', () => {
 
 
 
-// cypress/support/commands.js
-
 Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, videoDescription, parentId, uploadToken }) => {
     // Read the video file as a binary file
     cy.readFile(videoPath, 'binary').then((fileContent) => {
-      // Convert binary file content into a Blob
+      // Convert binary file
       const blob = Cypress.Blob.binaryStringToBlob(fileContent, 'video/mp4');
   
-      // Send the request to upload the video
+      // upload the video
       return cy.request({
         method: 'POST',
         url: 'https://uploader.kinescope.io/v2/video',
