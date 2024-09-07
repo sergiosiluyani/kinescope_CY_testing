@@ -10,7 +10,14 @@ describe('Verify the video is uploaded', () => {
       //Step 1: call API to upload video
 
       cy.fixture('videoInfo').then((data) => {
-        cy.uploadVideo(data)
+        cy.uploadVideo(data);
+        
+
+
+        cy.fixture('login').then((credentials) => {
+          cy.login(credentials);  // Assuming cy.login() is a custom command
+        });
+        
       
         // Step 3: user visits the page where the video is uploaded
         cy.visit('https://app.kinescope.io/video');
