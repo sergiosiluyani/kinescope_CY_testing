@@ -13,7 +13,7 @@ describe('Verify the video is uploaded', () => {
         cy.uploadVideo(data);
         
 
-
+      //Step 2: login to page
         cy.fixture('login').then((credentials) => {
           cy.login(credentials);  // Assuming cy.login() is a custom command
         });
