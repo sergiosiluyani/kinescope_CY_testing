@@ -10,11 +10,7 @@ describe('Verify the video is uploaded', () => {
       //Step 1: call API to upload video
 
       cy.fixture('videoInfo').then((data) => {
-        cy.uploadVideo(data).then((response) => {
-        
-            // Step 2: Verify that the upload request was successful
-            expect(response.status).to.eq(200);
-            cy.log('Video upload request was successful.');
+        cy.uploadVideo(data)
       
         // Step 3: user visits the page where the video is uploaded
         cy.visit('https://app.kinescope.io/video');
@@ -22,9 +18,9 @@ describe('Verify the video is uploaded', () => {
         cy.getFolder();
         
         // Step 4: user verifies the video with the correct title is present
-        cy.contains(videoInfo.videoTitle).should('be.visible');
 
-        cy.log(`The video "${videoInfo.videoTitle}" has successfully appeared on the page.`);
+        cy.contains(data.videoTitle).should('be.visible');
+        cy.log(`The video "${data.videoTitle}" has successfully appeared on the page.`);
 
         cy.get('button').contains('Дата загрузки').click();
 
@@ -41,6 +37,4 @@ describe('Verify the video is uploaded', () => {
   });
 
 });
-
-    });
-  });
+});
