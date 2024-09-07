@@ -6,13 +6,22 @@ describe('Verify the video is uploaded', () => {
     });
   
     it('verifies the video is uploaded', () => {
+
+      //Step 1: call API to upload video
+
+      cy.fixture('videoInfo').then((data) => {
+        cy.uploadVideo(data).then((response) => {
+        
+            // Step 2: Verify that the upload request was successful
+            expect(response.status).to.eq(200);
+            cy.log('Video upload request was successful.');
       
-        // Step 1: user visits the page where the video is uploaded
+        // Step 3: user visits the page where the video is uploaded
         cy.visit('https://app.kinescope.io/video');
 
         cy.getFolder();
         
-        // Step 2: user verifies the video with the correct title is present
+        // Step 4: user verifies the video with the correct title is present
         cy.contains(videoInfo.videoTitle).should('be.visible');
 
         cy.log(`The video "${videoInfo.videoTitle}" has successfully appeared on the page.`);
@@ -21,7 +30,7 @@ describe('Verify the video is uploaded', () => {
 
         cy.wait(1000);
 
-        // Step 3: Find and verify the upload date is not empty
+        // Step 5: Find and verify the upload date is not empty
         cy.get('div._1hx3amt')
         .invoke('text')
         .should('not.be.empty')
@@ -32,3 +41,6 @@ describe('Verify the video is uploaded', () => {
   });
 
 });
+
+    });
+  });
