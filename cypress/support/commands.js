@@ -61,24 +61,29 @@ Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, vid
     });
   });
 
-  Cypress.Commands.add('getLatestVideoId', () => {
-    cy.fixture('videoInfo').then(({ uploadToken }) => {
-      cy.request({
-        method: 'GET',
-        url: 'https://api.kinescope.io/v1/videos', // Assuming this is the correct endpoint
-        headers: {
-          Authorization: `Bearer ${uploadToken}`
-        },
-        failOnStatusCode: false
-      }).then((response) => {
-        const videoId = response.body.data.id;
-        cy.log('Latest Video ID:', videoId);
   
+Cypress.Commands.add('getLatestVideoId', () => {
+  cy.fixture('videoInfo').then(({ uploadToken }) => {
+    cy.request({
+      method: 'GET',
+      url: 'https://api.kinescope.io/v1/videos', // Assuming this is the correct endpoint
+      headers: {
+        Authorization: `Bearer ${uploadToken}`
+      },
+      failOnStatusCode: false
+    }).then((response) => {
+      if (response.body.data && response.body.data.length > 0) {
+        const videoId = response.body.data[0].id; // Accessing the first video's ID in the array
+        cy.log('Latest Video ID:', videoId);
+
         // Save videoId to a fixture file
         cy.writeFile('cypress/fixtures/videoId.json', { videoId });
-      });
+      } else {
+        cy.log('No video data found.');
+      }
     });
   });
+});
 
   Cypress.Commands.add('updateVideo', ({ newTitle, newDescription, privacyType, privacyDomains, additionalMaterialsEnabled, tags }) => {
     cy.fixture('videoInfo').then(({ uploadToken }) => {

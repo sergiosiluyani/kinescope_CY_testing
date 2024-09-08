@@ -13,8 +13,5 @@ describe('Video API Tests', () => {
       additionalMaterialsEnabled: false,
       tags: ['tag1', 'tag2']
     });
-
-    // Step 3: Delete the video using the saved video ID
-    cy.deleteVideo();
   });
 });
