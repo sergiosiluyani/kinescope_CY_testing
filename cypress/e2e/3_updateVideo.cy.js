@@ -1,6 +1,6 @@
 describe('Video API Tests', () => {
 
-  it('gets the latest video ID, updates the video, and then deletes it', () => {
+  it('gets the latest video ID and saves it to fixture file', () => {
     // Step 1: Get the latest video ID and save it
     cy.getLatestVideoId();
 

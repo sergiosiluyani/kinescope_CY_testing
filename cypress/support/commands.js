@@ -21,12 +21,12 @@ Cypress.Commands.add('login', () => {
 
 
 Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, videoDescription, parentId, uploadToken }) => {
-    // Read the video file as a binary file
+
     cy.readFile(videoPath, 'binary').then((fileContent) => {
-      // Convert binary file
+
       const blob = Cypress.Blob.binaryStringToBlob(fileContent, 'video/mp4');
   
-      // upload the video
+
       return cy.request({
         method: 'POST',
         url: 'https://uploader.kinescope.io/v2/video',
@@ -50,10 +50,10 @@ Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, vid
     });
   });
 
-  // Add this to your Cypress setup (e.g., in your beforeEach or in the main test file)
+
   Cypress.Commands.add('blockAllRequests', () => {
     cy.intercept('*', (req) => {
-      const allowedDomains = ['https://app.kinescope.io']; // Add domains you want to allow
+      const allowedDomains = ['https://app.kinescope.io'];
   
       if (!allowedDomains.some(domain => req.url.includes(domain))) {
         req.destroy(); // Block the request
@@ -66,14 +66,14 @@ Cypress.Commands.add('getLatestVideoId', () => {
   cy.fixture('videoInfo').then(({ uploadToken }) => {
     cy.request({
       method: 'GET',
-      url: 'https://api.kinescope.io/v1/videos', // Assuming this is the correct endpoint
+      url: 'https://api.kinescope.io/v1/videos',
       headers: {
         Authorization: `Bearer ${uploadToken}`
       },
       failOnStatusCode: false
     }).then((response) => {
       if (response.body.data && response.body.data.length > 0) {
-        const videoId = response.body.data[0].id; // Accessing the first video's ID in the array
+        const videoId = response.body.data[0].id;
         cy.log('Latest Video ID:', videoId);
 
         // Save videoId to a fixture file
