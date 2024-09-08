@@ -12,6 +12,7 @@ describe('Video API Tests', () => {
       privacyDomains: ['example.com'],
       additionalMaterialsEnabled: false,
       tags: ['tag1', 'tag2']
+
+      });
     });
   });
-});
