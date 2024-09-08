@@ -45,11 +45,6 @@ Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, vid
         // Check the response
         if (response.status === 200) {
           cy.log('Video uploaded successfully:', response.body);
-          
-          let body = response; // Access the body
-                
-        // Save the video ID to a fixture file
-        cy.writeFile('cypress/fixtures/responsebody.json', { body }); // Save as JSON
         }
       });
     });
@@ -65,3 +60,75 @@ Cypress.Commands.add('uploadVideo', ({ videoFileName, videoPath, videoTitle, vid
       }
     });
   });
+
+  Cypress.Commands.add('getLatestVideoId', () => {
+    cy.fixture('videoInfo').then(({ uploadToken }) => {
+      cy.request({
+        method: 'GET',
+        url: 'https://api.kinescope.io/v1/videos', // Assuming this is the correct endpoint
+        headers: {
+          Authorization: `Bearer ${uploadToken}`
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        const videoId = response.body.data.id;
+        cy.log('Latest Video ID:', videoId);
+  
+        // Save videoId to a fixture file
+        cy.writeFile('cypress/fixtures/videoId.json', { videoId });
+      });
+    });
+  });
+
+  Cypress.Commands.add('updateVideo', ({ newTitle, newDescription, privacyType, privacyDomains, additionalMaterialsEnabled, tags }) => {
+    cy.fixture('videoInfo').then(({ uploadToken }) => {
+      cy.fixture('videoId').then(({ videoId }) => {
+        cy.request({
+          method: 'PATCH',
+          url: `https://api.kinescope.io/v1/videos/${videoId}`,
+          headers: {
+            Authorization: `Bearer ${uploadToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: {
+            title: newTitle,
+            description: newDescription,
+            privacy_type: privacyType,
+            privacy_domains: privacyDomains,
+            additional_materials_enabled: additionalMaterialsEnabled,
+            tags: tags
+          },
+          failOnStatusCode: false
+        }).then((response) => {
+          if (response.status === 200) {
+            cy.log('Video updated successfully:', response.body);
+          } else {
+            cy.log('Failed to update video:', response.body);
+          }
+        });
+      });
+    });
+  });
+  
+
+  Cypress.Commands.add('deleteVideo', () => {
+    cy.fixture('videoInfo').then(({ uploadToken }) => {
+      cy.fixture('videoId').then(({ videoId }) => {
+        cy.request({
+          method: 'DELETE',
+          url: `https://api.kinescope.io/v1/videos/${videoId}`,
+          headers: {
+            Authorization: `Bearer ${uploadToken}`
+          },
+          failOnStatusCode: false
+        }).then((response) => {
+          if (response.status === 204) {
+            cy.log('Video deleted successfully');
+          } else {
+            cy.log('Failed to delete video:', response.body);
+          }
+        });
+      });
+    });
+  });
+  
