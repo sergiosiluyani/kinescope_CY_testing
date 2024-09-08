@@ -19,7 +19,7 @@ describe('Verify the video is uploaded', () => {
         cy.getFolder();
         
         // Step 3: user verifies the video with the correct title is present
-
+        cy.fixture('videoInfo').then((data) => {
         cy.contains(data.videoTitle).should('be.visible');
         cy.log(`The video "${data.videoTitle}" has successfully appeared on the page.`);
 
@@ -37,4 +37,5 @@ describe('Verify the video is uploaded', () => {
     });
   });
 
+});
 });

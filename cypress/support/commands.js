@@ -127,7 +127,7 @@ Cypress.Commands.add('getLatestVideoId', () => {
           },
           failOnStatusCode: false
         }).then((response) => {
-          if (response.status === 204) {
+          if (response.status === 200) {
             cy.log('Video deleted successfully');
           } else {
             cy.log('Failed to delete video:', response.body);
