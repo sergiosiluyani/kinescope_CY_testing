@@ -85,35 +85,36 @@ Cypress.Commands.add('getLatestVideoId', () => {
   });
 });
 
-  Cypress.Commands.add('updateVideo', ({ newTitle, newDescription, privacyType, privacyDomains, additionalMaterialsEnabled, tags }) => {
+Cypress.Commands.add('updateVideo', (updateData) => {
+  cy.fixture('videoId').then(({ videoId }) => {
     cy.fixture('videoInfo').then(({ uploadToken }) => {
-      cy.fixture('videoId').then(({ videoId }) => {
-        cy.request({
-          method: 'PATCH',
-          url: `https://api.kinescope.io/v1/videos/${videoId}`,
-          headers: {
-            Authorization: `Bearer ${uploadToken}`,
-            'Content-Type': 'application/json'
-          },
-          body: {
-            title: newTitle,
-            description: newDescription,
-            privacy_type: privacyType,
-            privacy_domains: privacyDomains,
-            additional_materials_enabled: additionalMaterialsEnabled,
-            tags: tags
-          },
-          failOnStatusCode: false
-        }).then((response) => {
-          if (response.status === 200) {
-            cy.log('Video updated successfully:', response.body);
-          } else {
-            cy.log('Failed to update video:', response.body);
-          }
+      cy.request({
+        method: 'PATCH',
+        url: `https://api.kinescope.io/v1/videos/${videoId}`,
+        headers: {
+          Authorization: `Bearer ${uploadToken}`,
+        },
+        body: {
+          title: updateData.newTitle,
+          description: updateData.newDescription,
+          privacy_type: updateData.privacyType,
+          privacy_domains: updateData.privacyDomains,
+          additional_materials_enabled: updateData.additionalMaterialsEnabled,
+          tags: updateData.tags,
+        },
+      }).then((response) => {
+        // Verify the update was successful
+        expect(response.status).to.equal(200);
+
+        // Store the updated title in the fixture file
+        cy.writeFile('cypress/fixtures/updatedVideoInfo.json', {
+          updatedTitle: updateData.newTitle,
+          updatedDescription: updateData.newDescription,
         });
       });
     });
   });
+});
   
 
   Cypress.Commands.add('deleteVideo', () => {
