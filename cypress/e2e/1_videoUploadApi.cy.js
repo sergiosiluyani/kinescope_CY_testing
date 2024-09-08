@@ -1,6 +1,6 @@
 describe('Video API Tests', () => {
 
-    it('deletes video', () => {
+    it('uploads the video', () => {
 
         cy.fixture('videoInfo').then((data) => {
             cy.uploadVideo(data);

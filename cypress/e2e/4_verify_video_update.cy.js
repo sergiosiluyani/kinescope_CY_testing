@@ -20,8 +20,14 @@ describe('Verify the video is uploaded', () => {
         
         // Step 3: user verifies the video with the correct title is present
         cy.fixture('updatedVideoInfo').then((data) => {
-        cy.contains(data.UpdatedTitle).should('be.visible');
-        cy.log(`The video "${data.UpdatedTitle}" has successfully appeared on the page.`);
+          // Ensure the updated title exists
+          expect(data).to.have.property('updatedTitle');
+          const updatedTitle = data.updatedTitle;
+
+        cy.contains(updatedTitle).should('be.visible');
+        cy.log(`The video with the updated title "${updatedTitle}" has successfully appeared on the page.`);
+
+
   });
 
 });
