@@ -11,10 +11,6 @@ describe('Verify the video is uploaded', () => {
         cy.fixture('login').then((credentials) => {
           cy.login(credentials);
         });
-        
-      
-        // Step 2: user visits the page where the video is uploaded
-        cy.visit('https://app.kinescope.io/video');
 
         cy.getFolder();
         
